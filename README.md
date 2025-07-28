@@ -1,68 +1,78 @@
-# Secret Reconstruction using Polynomial Interpolation (C++)
+## 🔐 Secret Reconstruction using Polynomial Interpolation (C++)
+This project reconstructs a secret using Lagrange Polynomial Interpolation, inspired by Shamir's Secret Sharing scheme.
 
-This project implements a secret reconstruction algorithm inspired by **Shamir's Secret Sharing**. The secret is recovered from a set of shares using **Lagrange Interpolation**.
+## 📌 Features
+Reconstructs a secret using any k out of n valid shares.
 
-## 🔧 Features
+No external libraries used.
 
-- Reads JSON input directly from a hardcoded string in the C++ file.
-- Computes values from operations like:
-  - `sum`
-  - `multiply`
-  - `gcd`
-- Handles incorrect shares by checking all combinations of shares (`nCk`) and selecting the most common result.
-- Uses manual parsing and built-in data types (`long long`).
+Manual base conversion (e.g., from base 3, 6, 7, etc.).
+
+All math (like gcd) implemented manually without STL.
+
+Selects the most frequent result from all nCk combinations for robustness.
 
 ## 📋 Input Format
+The input is hardcoded in the C++ file in a JSON-like structure.
 
-The JSON contains:
-- `n`: Total number of shares.
-- `k`: Threshold needed to reconstruct the secret.
-- `shares`: A map of share ID to operation with values.
+Each share contains:
 
-Example format:
+base: the base in which the number is encoded (e.g., base 3, base 16).
+
+value: the string representing the number in that base.
+
+## Example:
+
 json
+Copy
+Edit
 {
-  "n": 5,
-  "k": 3,
-  "shares": {
-    "1": { "op": "sum", "a": 1000000000000000000, "b": 29 },
-    "2": { "op": "multiply", "a": 7, "b": 900000000000000003 },
-    "3": { "op": "gcd", "a": 391, "b": 17 },
-    ...
-  }
+  "keys": { "n": 10, "k": 7 },
+  "1": { "base": "6", "value": "13444211440455345511" },
+  "2": { "base": "15", "value": "aed7015a346d63" },
+  "3": { "base": "15", "value": "6aeeb69631c227c" },
+  ...
 }
-JSON is parsed manually from a string inside the C++ code — no external libraries are used.
-## 🚀 How It Works
-Each share is computed using the operation and values.
+## ⚙️ How It Works
+Input Parsing
 
-All k-combinations of shares are formed.
+JSON-like string parsed manually.
 
-Lagrange Interpolation is applied to reconstruct the secret.
+All numbers converted from their given base to decimal (long long).
 
-The most frequently appearing secret is selected as the valid one.
+Secret Recovery
 
-## 🛠 How to Run
-Open the C++ file in your editor.
+All combinations of k shares are formed.
 
-## Compile and run:
+Lagrange Interpolation is applied to get the original secret.
 
-g++ secret_reconstruction.cpp -o secret
-./secret
+The most common result among all combinations is chosen as the final answer.
 
-## Output:
+Mathematical Routines
+
+Modular Inverse and GCD are implemented manually.
+
+## 🧪 Sample Output
+
 The secret is: 1000000000000000029
-## 📌 Note
-The code uses long long. If your values go beyond 10^18, consider implementing a custom BigInt class.
+## 🚀 How to Run
+Open Answer.cpp in any C++17-supported compiler.
 
-You can expand the parser and computation logic to support more operations like lcm, subtract, etc.
+Compile:
 
-## 📁 File
-Answer.cpp: Main C++ file containing all logic.
+bash
+Copy
+Edit
+g++ -std=c++17 Answer.cpp -o secret
+Run:
 
+bash
+Copy
+Edit
+./secret
+🛠 Note
+Works with values up to 10^18 using long long.
 
+If you want to support larger numbers, consider implementing a BigInt class.
 
-
-
-
-
-
+You can add more operations or formats easily.
