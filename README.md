@@ -66,6 +66,3 @@ Answer.cpp: Main C++ file containing all logic.
 
 
 
-
-Ask ChatGPT
-
